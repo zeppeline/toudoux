@@ -1,10 +1,10 @@
 # toudoux
 
-> failed exams bring you to creating to do lists, maybe to punish you for being so disorganized - Abraham Lincoln
+> failed exams bring you to creating to do lists, maybe to punish you for being so disorganized - **Abraham Lincoln**
 
-> Laravel is the answer to everything - Gandhi
-
-> Laravel is the new black - Kim Kardashian
+> Laravel is the answer to everything - **Gandhi**
+  
+> Laravel is the new black - **Kim Kardashian**
 
 ## what is toudoux though
 

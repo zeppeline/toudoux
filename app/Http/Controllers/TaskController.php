@@ -45,10 +45,12 @@ class TaskController extends Controller
     {
         $this->validate($request, [
             'body' => 'required|string',
+            'dueDate' => 'required|date'
         ]);
 
         $request->user()->tasks()->create([
-            'body' => $request->body
+            'body' => $request->body,
+            'due_date' => $request->dueDate
         ]);
 
         return redirect('/tasks');

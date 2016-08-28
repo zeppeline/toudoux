@@ -25,5 +25,6 @@ $factory->define(App\Task::class, function (Faker\Generator $faker) {
         'body' => $faker->text(50),
         'completed' => $faker->boolean,
         'user_id' => 1,
+        'due_date' => $faker->date,
     ];
 });

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Http\Requests;
 use App\Task;
+use Carbon\Carbon;
 
 class TaskController extends Controller
 {
@@ -22,7 +23,24 @@ class TaskController extends Controller
      */
     public function index($request)
     {
-        return $request->user()->tasks()->get();
+        $tasks= $request->user()->tasks()->get();
+
+        if(( ! isset($request->minDate) || $request->minDate === '' ) ||
+           ( ! isset($request->maxDate) || $request->maxDate === '')) {
+            return $tasks;
+        }
+
+        $minDate = Carbon::parse($request->minDate);
+        $maxDate = Carbon::parse($request->maxDate);
+        $tasksToShow = [];
+
+        foreach($tasks as $task) {
+            if(Carbon::parse($task->due_date)->between($minDate, $maxDate)) {
+                $tasksToShow[] = $task;
+            }
+        }
+
+        return $tasksToShow;
     }
 
     /**

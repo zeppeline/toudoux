@@ -8,7 +8,20 @@
                 <div class="panel-heading">My tasks</div>
 
                 <div class="panel-body">
-                    You are logged in!
+                    <form action="/api/tasks" method="post">
+                        {{ csrf_field() }}
+                        <fieldset>
+                            <label for="newTask">New task: </label>
+                            <input type="text" name="body" value="" id="newTask">
+                            @if ($errors->has('body'))
+                                <div>
+                                    <?php echo $errors->first('body'); ?>
+                                </div>
+                            @endif
+                            <input type="submit" value="Add new task">
+                        </fieldset>
+                    </form>
+
                     <form action="/tasks" method="post">
                         {{ csrf_field() }}
                         <input type="hidden" name="_method" value="PUT">

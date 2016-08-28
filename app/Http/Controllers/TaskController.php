@@ -43,7 +43,15 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'body' => 'required|string',
+        ]);
+
+        $request->user()->tasks()->create([
+            'body' => $request->body
+        ]);
+
+        return redirect('/tasks');
     }
 
     /**

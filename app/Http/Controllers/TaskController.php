@@ -95,9 +95,23 @@ class TaskController extends Controller
     {
         foreach($request->all() as $key => $val) {
             Task::where('id', $key)->update(['completed' => $val]);
+
+            // Check if a delete button has been clicked
+            if(strpos($key, 'delete') !== false) {
+                return $this->confirmDestroy(str_replace('delete-', '', $key));
+            }
         }
 
         return redirect('/tasks');
+    }
+
+    /**
+     * Add a confirm page to delete the tasks
+     */
+    public function confirmDestroy($id)
+    {
+        $task = Task::find($id);
+        return view('confirmDestroy')->with('task', $task);
     }
 
     /**
@@ -106,8 +120,11 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $taskId)
     {
-        //
+        $task = Task::find($taskId);
+        $this->authorize('destroy', $task);
+        $task->delete();
+        return redirect('/tasks');
     }
 }

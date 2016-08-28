@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Validator;
 use App\Http\Requests;
 use App\Task;
 
@@ -73,7 +73,8 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        //
+        $task = Task::find($id);
+        return view('taskEdit')->with('task', $task);
     }
 
     /**
@@ -83,9 +84,22 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $taskId)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'body' => 'required|string'
+        ]);
+
+        if($validator->fails()) {
+            return redirect('/api/tasks/' . $taskId . '/edit')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $task = Task::find($taskId);
+        $task->body = $request->input('body');
+        $task->save();
+        return redirect('/tasks');
     }
 
     /**
@@ -99,6 +113,11 @@ class TaskController extends Controller
             // Check if a delete button has been clicked
             if(strpos($key, 'delete') !== false) {
                 return $this->confirmDestroy(str_replace('delete-', '', $key));
+            }
+
+            // Check if an edit button has been clicked
+            if(strpos($key, 'edit') !== false) {
+                return $this->edit(str_replace('edit-', '', $key));
             }
         }
 

@@ -31,6 +31,7 @@
                                 <li>
                                     <input type="hidden" name="{{ $task->id }}" value="0">
                                     <input type="submit" name="{{ 'delete-' . $task->id }}" value="x">
+                                    <input type="submit" name="{{ 'edit-' . $task->id }}" value="edit">
                                     <input type="checkbox" name="{{ $task->id }}" id="{{ $task->id }}" value="1" {{ $task->completed == 1 ? 'checked="checked"' : '' }}>
                                     <label for="{{ $task->id }}">{{ $task->body }}</label>
                                 </li>

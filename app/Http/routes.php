@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth' ], function () {
     Route::get('/tasks', 'TaskController@view');
+    Route::put('/tasks', 'TaskController@updateAll');
 } );
 
 Route::auth();

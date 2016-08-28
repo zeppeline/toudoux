@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Task;
 
 class TaskController extends Controller
 {
@@ -77,6 +78,18 @@ class TaskController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    /**
+     * Updates all tasks at once
+     */
+    public function updateAll(Request $request)
+    {
+        foreach($request->all() as $key => $val) {
+            Task::where('id', $key)->update(['completed' => $val]);
+        }
+
+        return redirect('/tasks');
     }
 
     /**

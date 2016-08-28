@@ -12,8 +12,8 @@ class TaskController extends Controller
 {
     public function view(Request $request)
     {
-        $tasks = $this->index($request);
-        return view('tasks')->with('tasks', $tasks);
+        $data = $this->index($request);
+        return view('tasks')->with(['tasks' => $data['tasks'], 'projects' => $data['projects']]);
     }
 
     /**
@@ -23,13 +23,23 @@ class TaskController extends Controller
      */
     public function index($request)
     {
+        $projects = $request->user()->projects()->get();
         $tasks= $request->user()->tasks()->get();
 
         if(( ! isset($request->minDate) || $request->minDate === '' ) ||
-           ( ! isset($request->maxDate) || $request->maxDate === '')) {
-            return $tasks;
+           ( ! isset($request->maxDate) || $request->maxDate === '') &&
+           ( ! isset($request->project) || $request->project === '')) {
+            return ["tasks" => $tasks, "projects" => $projects];
         }
 
+        /*
+        ** Sort tasks by project
+        */
+
+
+        /*
+        ** Sort tasks by date
+        */
         $minDate = Carbon::parse($request->minDate);
         $maxDate = Carbon::parse($request->maxDate);
         $tasksToShow = [];
@@ -40,7 +50,7 @@ class TaskController extends Controller
             }
         }
 
-        return $tasksToShow;
+        return ["tasks" => $tasksToShow, "projects" => $projects];
     }
 
     /**
@@ -68,7 +78,8 @@ class TaskController extends Controller
 
         $request->user()->tasks()->create([
             'body' => $request->body,
-            'due_date' => $request->dueDate
+            'due_date' => $request->dueDate,
+            'project_id' => $request->project
         ]);
 
         return redirect('/tasks');

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    protected $fillable = ['body', 'due_date'];
+    protected $fillable = ['body', 'due_date', 'project_id'];
 
     protected $dates = [
         'created_at',
@@ -16,5 +16,9 @@ class Task extends Model
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function project() {
+        return $this->belongsTo(Project::class);
     }
 }

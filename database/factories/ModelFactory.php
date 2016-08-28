@@ -28,3 +28,11 @@ $factory->define(App\Task::class, function (Faker\Generator $faker) {
         'due_date' => $faker->date,
     ];
 });
+
+$factory->define(App\Project::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->word(50),
+        'color' => $faker->hexcolor(),
+        'user_id' => 1,
+    ];
+});

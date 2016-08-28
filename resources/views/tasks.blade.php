@@ -35,6 +35,15 @@
                                 </div>
                             @endif
                             <br>
+                            <label for="project">Assign project:</label>
+                            <select id="project" name="project">
+                                <option value="">(None)</option>
+                                @foreach ($projects as $project)
+                                    <option value="{{ $project->id }}">
+                                        {{ $project->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                             <input type="submit" value="Add new task">
                         </fieldset>
                     </form>
@@ -57,7 +66,22 @@
                         </fieldset>
                         <input type="submit" value="Save changes">
                     </form>
+                </div>
 
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        My projects
+                    </div>
+                    <ul>
+                        @foreach($projects as $project)
+                            <li style="background-color:{{ $project->color }};">
+                                <a href="?project={{ $project->id }}">{{ $project->name }}</a>
+                            </li>
+                        @endforeach
+                        <li>
+                            <a href="/tasks">All</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

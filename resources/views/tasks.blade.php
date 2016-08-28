@@ -9,6 +9,18 @@
 
                 <div class="panel-body">
                     You are logged in!
+                    <form>
+                        <fieldset>
+                            <ul>
+                                @foreach($tasks as $task)
+                                <li>
+                                    <input type="checkbox" name="{{ $task->id }}" id="{{ $task->id }}" value="" {{ $task->completed == 1 ? 'checked="checked"' : '' }}>
+                                    <label for="{{ $task->id }}">{{ $task->body }}</label>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </fieldset>
+                    </form>
                 </div>
             </div>
         </div>

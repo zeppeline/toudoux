@@ -8,9 +8,10 @@ use App\Http\Requests;
 
 class TaskController extends Controller
 {
-    public function view()
+    public function view(Request $request)
     {
-        return view('tasks');
+        $tasks = $this->index($request);
+        return view('tasks')->with('tasks', $tasks);
     }
 
     /**
@@ -18,9 +19,9 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($request)
     {
-        //
+        return $request->user()->tasks()->get();
     }
 
     /**

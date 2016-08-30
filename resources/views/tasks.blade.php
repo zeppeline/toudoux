@@ -9,6 +9,23 @@
                     <h3 class="panel-title">My projects</h3>
                 </div>
                 <div class="panel-body">
+                    <form class="row no-js" action="/api/projects" method="post">
+                        {{ csrf_field() }}
+                        <fieldset>
+                            <div class="form-group col-md-4">
+                                <label for="newProject">New project:</label>
+                                <input class="form-control" type="text" name="projectName" value="" id="newProject">
+                                @if ($errors->has('projectName'))
+                                    <div>
+                                        <?php echo $errors->first('projectName'); ?>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="form-group col-md-12">
+                                <input class="btn btn-primary" type="submit" value="Add new project">
+                            </div>
+                        </fieldset>
+                    </form>
                     <ul class="list-group">
                         <li class="list-group-item">
                             <a href="/tasks">All</a>

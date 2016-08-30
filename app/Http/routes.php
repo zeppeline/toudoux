@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth' ], function () {
     Route::get('/tasks', 'TaskController@view');
     Route::put('/tasks', 'TaskController@updateAll');
     Route::get('/projects/{id}/confirmdelete', 'ProjectController@confirmDelete');
+    Route::get('/tags/{id}/confirmdelete', 'TagController@confirmDelete');
 
     Route::group(['prefix' => 'api'], function(){
         Route::resource('tasks', 'TaskController');

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\User;
+use App\Tag;
 use App\Task;
 use Validator;
 
@@ -93,6 +94,19 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tag = Tag::find($id);
+        $this->authorize('destroy', $tag);
+        $tag->delete();
+        return redirect('/tasks');
+    }
+
+    /*
+    ** Add the confirm delete page
+    */
+    public function confirmDelete($id)
+    {
+        $tag = Tag::find($id);
+
+        return view('tagDelete')->with("tag", $tag);
     }
 }

@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth' ], function () {
     Route::group(['prefix' => 'api'], function(){
         Route::resource('tasks', 'TaskController');
         Route::resource('projects', 'ProjectController');
+        Route::resource('tags', 'TagController');
     });
 } );
 

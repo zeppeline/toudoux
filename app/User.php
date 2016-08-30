@@ -38,4 +38,11 @@ class User extends Authenticatable
           return $this->hasMany(Project::class);
       }
 
+     /**
+      * Get all the tags for the user
+      */
+      public function tags() {
+          return $this->hasMany(Tag::class);
+      }
+
 }

@@ -7,6 +7,7 @@ use Validator;
 use App\Http\Requests;
 use App\Task;
 use App\Project;
+use App\Tag;
 use Carbon\Carbon;
 
 class TaskController extends Controller
@@ -14,7 +15,7 @@ class TaskController extends Controller
     public function view(Request $request)
     {
         $data = $this->index($request);
-        return view('tasks')->with(['tasks' => $data['tasks'], 'projects' => $data['projects']]);
+        return view('tasks')->with(['tasks' => $data['tasks'], 'projects' => $data['projects'], 'tags' => $data['tags']]);
     }
 
     /**
@@ -25,12 +26,13 @@ class TaskController extends Controller
     public function index($request)
     {
         $projects = $request->user()->projects()->get();
-        $tasks= $request->user()->tasks()->get();
+        $tasks = $request->user()->tasks()->get();
+        $tags = $request->user()->tags()->get();
 
         if((( ! isset($request->minDate) || $request->minDate === '' ) ||
            ( ! isset($request->maxDate) || $request->maxDate === '')) &&
            ( ! isset($request->project) || $request->project === '')) {
-            return ["tasks" => $tasks, "projects" => $projects];
+            return ["tasks" => $tasks, "projects" => $projects, "tags" => $tags];
         }
 
         /*
@@ -57,7 +59,7 @@ class TaskController extends Controller
             $tasks = $tasksToShow;
         }
 
-        return ["tasks" => $tasks, "projects" => $projects];
+        return ["tasks" => $tasks, "projects" => $projects, "tags" => $tags];
     }
 
     /**

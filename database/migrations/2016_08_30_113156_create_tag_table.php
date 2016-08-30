@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddForeignKeysToTasksTable extends Migration
+class CreateTagTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,11 @@ class AddForeignKeysToTasksTable extends Migration
      */
     public function up()
     {
-        Schema::table('tasks', function ($table) {
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+        Schema::create('tags', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->integer('user_id')->unsigned()->index();
+            $table->timestamps();
         });
     }
 
@@ -24,6 +27,6 @@ class AddForeignKeysToTasksTable extends Migration
      */
     public function down()
     {
-        Schema::drop('tasks');
+        Schema::drop('tags');
     }
 }

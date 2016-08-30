@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTasksTable extends Migration
+class CreateTaskTagsRelationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,10 @@ class CreateTasksTable extends Migration
      */
     public function up()
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('tasks_tags', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('body');
-            $table->date('due_date');
-            $table->boolean('completed')->default(0);
-            $table->integer('user_id')->unsigned()->index();
-            $table->integer('project_id')->unsigned()->index();
+            $table->integer('tag_id')->unsigned()->index();
+            $table->integer('task_id')->unsigned()->index();
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateTasksTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('tasks_tags');
     }
 }

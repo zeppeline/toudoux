@@ -121,9 +121,36 @@
                         </fieldset>
                         <input class="btn btn-primary" type="submit" value="Save changes">
                     </form>
-                    <tasks list="{{ json_encode($tasks) }}"></tasks>
                 </div>
             </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    My tags
+                </div>
+                <div class="panel-body">
+                    <form class="row no-js" action="/api/tags" method="post">
+                        {{ csrf_field() }}
+                        <fieldset>
+                            <div class="form-group col-md-12">
+                                <label for="tagName">New tag:</label>
+                                <input class="form-control" type="text" name="tagName" value="" id="tagName">
+                                @if ($errors->has('tagName'))
+                                    <div>
+                                        <?php echo $errors->first('tagName'); ?>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="form-group col-md-12">
+                                <input class="btn btn-primary" type="submit" value="Add new tag">
+                            </div>
+                        </fieldset>
+                    </form>
+                    <ul class="list-group">
+                        @foreach($tags as $tag)
+                            <li class="list-group-item row">{{ $tag->name }}</li>
+                        @endforeach
+                    </ul>
+                </div>
         </div>
     </div>
 </div>

@@ -98,6 +98,7 @@ class TagController extends Controller
         $tag = Tag::find($id);
         $tag->name = $request->input('tagName');
         $tag->save();
+
         return redirect('/tasks');
     }
 

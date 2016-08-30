@@ -129,6 +129,15 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-12">
+                                <label class="col-md-12">Add tag(s):</label>
+                                @foreach($tags as $tag)
+                                    <label for="tag{{ $tag->id }}">
+                                        <input type="checkbox" name="tags[]" id="tag{{ $tag->id }}" value="{{ $tag->id }}">
+                                        {{ $tag->name }}
+                                    </label>
+                                @endforeach
+                            </div>
+                            <div class="form-group col-md-12">
                                 <input class="btn btn-primary" type="submit" value="Add new task">
                             </div>
                         </fieldset>

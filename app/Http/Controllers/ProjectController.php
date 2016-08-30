@@ -55,7 +55,7 @@ class ProjectController extends Controller
     {
 
         $this->validate($request, [
-            'projectName' => 'required|string'
+            'projectName' => 'required|string|unique'
         ]);
 
         $request->user()->projects()->create([

@@ -85,11 +85,19 @@ class TaskController extends Controller
             'dueDate' => 'required|date'
         ]);
 
-        $request->user()->tasks()->create([
+        $task = $request->user()->tasks()->create([
             'body' => $request->body,
             'due_date' => $request->dueDate,
             'project_id' => $request->project
         ]);
+
+        $tags = [];
+
+        foreach($request->tags as $tag) {
+            $tags[] = $tag;
+        }
+
+        $task->tags()->attach($tags);
 
         return redirect('/tasks');
     }

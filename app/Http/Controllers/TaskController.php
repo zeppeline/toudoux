@@ -27,7 +27,7 @@ class TaskController extends Controller
     public function index($request)
     {
         $projects = $request->user()->projects()->get();
-        $tasks = $request->user()->tasks()->get();
+        $tasks = $request->user()->tasks()->orderBy('created_at', 'desc')->get();
         $tags = $request->user()->tags()->get();
 
         if((( ! isset($request->minDate) || $request->minDate === '' ) ||
@@ -47,17 +47,19 @@ class TaskController extends Controller
         /*
         ** Sort by tag
         */
-        $tasksToShow = [];
+        if(isset($request->tags)) {
+            $tasksToShow = [];
 
-        foreach($request->tags as $tag) {
-            foreach($tasks as $task) {
-                if($task->tags->contains($tag)) {
-                    $tasksToShow[] = $task;
+            foreach($request->tags as $tag) {
+                foreach($tasks as $task) {
+                    if($task->tags->contains($tag)) {
+                        $tasksToShow[] = $task;
+                    }
                 }
             }
-        }
 
-        $tasks = $tasksToShow;
+            $tasks = $tasksToShow;
+        }
 
         /*
         ** Sort tasks by date
@@ -108,13 +110,15 @@ class TaskController extends Controller
             'project_id' => $request->project
         ]);
 
-        $tags = [];
+        if(isset($request->tags)) {
+            $tags = [];
 
-        foreach($request->tags as $tag) {
-            $tags[] = $tag;
+            foreach($request->tags as $tag) {
+                $tags[] = $tag;
+            }
+
+            $task->tags()->attach($tags);
         }
-
-        $task->tags()->attach($tags);
 
         return redirect('/tasks');
     }
@@ -168,13 +172,15 @@ class TaskController extends Controller
         $task = Task::find($taskId);
         $task->update($request->all());
 
-        $tags = [];
+        if(isset($request->tags)) {
+            $tags = [];
 
-        foreach($request->tags as $tag) {
-            $tags[] = $tag;
+            foreach($request->tags as $tag) {
+                $tags[] = $tag;
+            }
+
+            $task->tags()->sync($tags);
         }
-
-        $task->tags()->sync($tags);
 
         return redirect('/tasks');
     }

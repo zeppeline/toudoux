@@ -11,11 +11,13 @@
 |
 */
 
+use Illuminate\Support\Facades\Hash;
+
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'name' => 'selinhep',
         'email' => 'celine.eppe@gmail.com',
-        'password' => 'password',
+        'password' => Hash::make('password'),
         'remember_token' => str_random(10),
     ];
 });

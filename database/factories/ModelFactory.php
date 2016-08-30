@@ -13,9 +13,9 @@
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->safeEmail,
-        'password' => bcrypt(str_random(10)),
+        'name' => 'selinhep',
+        'email' => 'celine.eppe@gmail.com',
+        'password' => 'password',
         'remember_token' => str_random(10),
     ];
 });
@@ -25,13 +25,14 @@ $factory->define(App\Task::class, function (Faker\Generator $faker) {
         'body' => $faker->text(50),
         'completed' => $faker->boolean,
         'user_id' => 1,
-        'due_date' => $faker->date,
+        'due_date' => $faker->dateTimeBetween('-5 days', '+1 month'),
+        'project_id' => 1,
     ];
 });
 
 $factory->define(App\Project::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->word(50),
+        'name' => $faker->city,
         'color' => $faker->hexcolor(),
         'user_id' => 1,
     ];

@@ -158,7 +158,12 @@
                                         <input class="btn btn-default" type="submit" name="{{ 'edit-' . $task->id }}" value="edit">
                                     </div>
                                     <div class="checkbox col-md-9">
-                                        <label for="{{ $task->id }}"><input type="checkbox" name="{{ $task->id }}" id="{{ $task->id }}" value="1" {{ $task->completed == 1 ? 'checked="checked"' : '' }}>{{ $task->body }} (due {{ $task->due_date->diffForHumans() }})</label>
+                                        <label for="{{ $task->id }}"><input type="checkbox" name="{{ $task->id }}" id="{{ $task->id }}" value="1" {{ $task->completed == 1 ? 'checked="checked"' : '' }}>{{ $task->body }} {{ $task->due_date ? '(due ' . $task->due_date->diffForHumans() . ')' : '' }}</label>
+                                        <p>
+                                            @foreach($task->tags as $tag)
+                                                #{{ $tag->name }}
+                                            @endforeach
+                                        </p>
                                     </div>
                                 </li>
                                 @endforeach

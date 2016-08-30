@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\User;
 use App\Tag;
 use App\Task;
+use App\Project;
 use Validator;
 
 class TagController extends Controller
@@ -71,7 +72,8 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tag = Tag::find($id);
+        return view('tagEdit')->with('tag', $tag);
     }
 
     /**
@@ -83,7 +85,20 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'tagName' => 'required|string'
+        ]);
+
+        if($validator->fails()) {
+            return redirect('/api/tags/' . $id . '/edit')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $tag = Tag::find($id);
+        $tag->name = $request->input('tagName');
+        $tag->save();
+        return redirect('/tasks');
     }
 
     /**

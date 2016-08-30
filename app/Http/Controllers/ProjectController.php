@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Task;
+use App\Project;
+use Validator;
 
 class ProjectController extends Controller
 {
@@ -104,6 +107,21 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $project = Project::find($id);
+        // $tasks = $project->tasks()->get();
+        $this->authorize('destroy', $project);
+        $project->delete();
+        return redirect('/tasks');
+    }
+
+    /*
+    ** Add the confirm delete page
+    */
+    public function confirmDelete($id)
+    {
+        $project = Project::find($id);
+        $tasks = $project->tasks()->get();
+
+        return view('projectDelete')->with(["tasks" => $tasks, "project" => $project]);
     }
 }

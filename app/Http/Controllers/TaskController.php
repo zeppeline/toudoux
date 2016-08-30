@@ -168,7 +168,7 @@ class TaskController extends Controller
     public function confirmDestroy($id)
     {
         $task = Task::find($id);
-        return view('confirmDestroy')->with('task', $task);
+        return view('taskDelete')->with('task', $task);
     }
 
     /**

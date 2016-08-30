@@ -32,6 +32,9 @@
                         </li>
                         @foreach($projects as $project)
                             <li class="list-group-item">
+                                <a class="btn btn-default" href="/projects/{{ $project->id }}/confirmdelete">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </a>
                                 <span style="display: inline-block; width: 16px; height: 16px; border-radius: 50%; background-color: {{ $project->color }}; margin-right: 10px; vertical-align: middle;"></span>
                                 <a href="?project={{ $project->id }}">{{ $project->name }}</a>
                             </li>

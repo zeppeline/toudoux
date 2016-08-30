@@ -12,7 +12,7 @@
                     <form class="row no-js" action="/api/projects" method="post">
                         {{ csrf_field() }}
                         <fieldset>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-12">
                                 <label for="newProject">New project:</label>
                                 <input class="form-control" type="text" name="projectName" value="" id="newProject">
                                 @if ($errors->has('projectName'))
@@ -34,6 +34,9 @@
                             <li class="list-group-item">
                                 <a class="btn btn-default" href="/projects/{{ $project->id }}/confirmdelete">
                                     <span class="glyphicon glyphicon-remove"></span>
+                                </a>
+                                <a class="btn btn-default" href="/api/projects/{{ $project->id }}/edit">
+                                    edit
                                 </a>
                                 <span style="display: inline-block; width: 16px; height: 16px; border-radius: 50%; background-color: {{ $project->color }}; margin-right: 10px; vertical-align: middle;"></span>
                                 <a href="?project={{ $project->id }}">{{ $project->name }}</a>

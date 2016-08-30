@@ -84,7 +84,8 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        //
+        $project = Project::find($id);
+        return view('projectEdit')->with('project', $project);
     }
 
     /**
@@ -96,7 +97,20 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'projectName' => 'required|string'
+        ]);
+
+        if($validator->fails()) {
+            return redirect('/api/projects/' . $id . '/edit')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $project = Project::find($id);
+        $project->name = $request->input('projectName');
+        $project->save();
+        return redirect('/tasks');
     }
 
     /**

@@ -42,13 +42,17 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-12">
-                                <label class="col-md-12">Add tag(s):</label>
-                                @foreach($tags as $tag)
-                                    <label for="tag{{ $tag->id }}">
-                                        <input type="checkbox" name="tags[]" id="tag{{ $tag->id }}" value="{{ $tag->id }}" {{ $task->tags->contains($tag->id) ? 'checked' : '' }} >
-                                        {{ $tag->name }}
-                                    </label>
-                                @endforeach
+                                @if (count($tags) == 0)
+                                    <!-- No tags -->
+                                @else
+                                    <label class="col-md-12">Add tag(s):</label>
+                                    @foreach($tags as $tag)
+                                        <label for="tag{{ $tag->id }}">
+                                            <input type="checkbox" name="tags[]" id="tag{{ $tag->id }}" value="{{ $tag->id }}" {{ $task->tags->contains($tag->id) ? 'checked' : '' }} >
+                                            {{ $tag->name }}
+                                        </label>
+                                    @endforeach
+                                @endif
                             </div>
                         </fieldset>
                         <input type="submit" value="Edit" class="btn btn-primary">

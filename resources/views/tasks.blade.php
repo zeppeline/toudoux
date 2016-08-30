@@ -159,26 +159,32 @@
                         <fieldset>
                             <ul class="list-group">
                                 @foreach($tasks as $task)
-                                <li class="form-group list-group-item row">
-                                    <input type="hidden" name="{{ $task->id }}" value="0">
-                                    <div class="col-md-3">
-                                        <button class="btn btn-default" type="submit" name="{{ 'delete-' . $task->id }}">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </button>
-                                        <input class="btn btn-default" type="submit" name="{{ 'edit-' . $task->id }}" value="edit">
-                                    </div>
-                                    <div class="checkbox col-md-9">
-                                        <label for="{{ $task->id }}"><input type="checkbox" name="{{ $task->id }}" id="{{ $task->id }}" value="1" {{ $task->completed == 1 ? 'checked="checked"' : '' }}>{{ $task->body }} {{ $task->due_date ? '(due ' . $task->due_date->diffForHumans() . ')' : '' }}</label>
-                                        <p>
-                                            @foreach($task->tags as $tag)
-                                                <a href="/tasks?tags[]={{ $tag->id }}">#{{ $tag->name }}</a>
-                                            @endforeach
-                                        </p>
-                                    </div>
-                                </li>
+                                    <li class="form-group list-group-item row">
+                                        <input type="hidden" name="{{ $task->id }}" value="0">
+                                        <div class="col-md-3">
+                                            <button class="btn btn-default" type="submit" name="{{ 'delete-' . $task->id }}">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                            <input class="btn btn-default" type="submit" name="{{ 'edit-' . $task->id }}" value="edit">
+                                        </div>
+                                        <div class="checkbox col-md-9">
+                                            <label for="{{ $task->id }}"><input type="checkbox" name="{{ $task->id }}" id="{{ $task->id }}" value="1" {{ $task->completed == 1 ? 'checked="checked"' : '' }}>{{ $task->body }} {{ $task->due_date ? '(due ' . $task->due_date->diffForHumans() . ')' : '' }}</label>
+                                            <p>
+                                                @foreach($task->tags as $tag)
+                                                    <a href="/tasks?tags[]={{ $tag->id }}">#{{ $tag->name }}</a>
+                                                @endforeach
+                                            </p>
+                                            @if($task->project()->first())
+                                                <p>
+                                                    <?php $project = $task->project()->first(); ?>
+                                                    <span style="display: inline-block; width: 16px; height: 16px; border-radius: 50%; background-color: {{ $project->color }}; margin-right: 10px; vertical-align: middle;"></span>
+                                                    <a href="?project={{ $task->project_id }}">{{ $project->name }}</a>
+                                                </p>
+                                            @endif
+                                        </div>
+                                    </li>
                                 @endforeach
                             </ul>
-
                         </fieldset>
                         <input class="btn btn-primary" type="submit" value="Save changes">
                     </form>

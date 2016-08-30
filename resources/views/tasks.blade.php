@@ -9,6 +9,7 @@
                     <h3 class="panel-title">My projects</h3>
                 </div>
                 <div class="panel-body">
+                    <!-- New project form -->
                     <form class="row no-js" action="/api/projects" method="post">
                         {{ csrf_field() }}
                         <fieldset>
@@ -26,6 +27,7 @@
                             </div>
                         </fieldset>
                     </form>
+                    <!-- Projects list -->
                     <ul class="list-group">
                         <li class="list-group-item">
                             <a href="/tasks">All</a>
@@ -50,6 +52,7 @@
                     My tags
                 </div>
                 <div class="panel-body">
+                    <!-- New tag form -->
                     <form class="row no-js" action="/api/tags" method="post">
                         {{ csrf_field() }}
                         <fieldset>
@@ -67,6 +70,7 @@
                             </div>
                         </fieldset>
                     </form>
+                    <!-- Tags list -->
                     <form class="" action="/tasks" method="get">
                         <div>
                             <ul class="list-group">
@@ -97,6 +101,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">My tasks</h3>
+                    <!-- Sort by date -->
                     <ul class="nav nav-pills">
                         <li><a href="/tasks">All</a></li>
                         <li><a href="?minDate={{ \Carbon\Carbon::today()->toDateString() }}&amp;maxDate={{ \Carbon\Carbon::today()->addDay()->toDateString() }}">Today</a></li>
@@ -106,10 +111,12 @@
                 </div>
 
                 <div class="panel-body">
+                    <!-- New task form -->
                     <form class="row no-js" action="/api/tasks" method="post">
                         {{ csrf_field() }}
                         <fieldset>
                             <div class="form-group col-md-4">
+                                <!-- Add task name (mandority) -->
                                 <label for="newTask">New task:</label>
                                 <input class="form-control" type="text" name="body" value="" id="newTask">
                                 @if ($errors->has('body'))
@@ -118,6 +125,7 @@
                                     </div>
                                 @endif
                             </div>
+                            <!-- Add due date (non mandatory) -->
                             <div class="form-group col-md-4">
                                 <label for="dueDate">Add due date (yyyy-mm-dd):</label>
                                 <input class="form-control" type="text" name="dueDate" id="dueDate">
@@ -127,6 +135,7 @@
                                     </div>
                                 @endif
                             </div>
+                            <!-- Add project (non mandatory) -->
                             <div class="form-group col-md-4">
                                 <label for="project">Assign project:</label>
                                 <select class="form-control" id="project" name="project">
@@ -138,6 +147,7 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <!-- Add tags (non mandatory) -->
                             <div class="form-group col-md-12">
                                 <label class="col-md-12">Add tag(s):</label>
                                 @foreach($tags as $tag)
@@ -152,7 +162,7 @@
                             </div>
                         </fieldset>
                     </form>
-
+                    <!-- Tasks list -->
                     <form class="no-js" action="/tasks" method="post">
                         {{ csrf_field() }}
                         <input type="hidden" name="_method" value="PUT">
@@ -169,11 +179,13 @@
                                         </div>
                                         <div class="checkbox col-md-9">
                                             <label for="{{ $task->id }}"><input type="checkbox" name="{{ $task->id }}" id="{{ $task->id }}" value="1" {{ $task->completed == 1 ? 'checked="checked"' : '' }}>{{ $task->body }} {{ $task->due_date ? '(due ' . $task->due_date->diffForHumans() . ')' : '' }}</label>
+                                            <!-- Display tags -->
                                             <p>
                                                 @foreach($task->tags as $tag)
                                                     <a href="/tasks?tags[]={{ $tag->id }}">#{{ $tag->name }}</a>
                                                 @endforeach
                                             </p>
+                                            <!-- Display project -->
                                             @if($task->project()->first())
                                                 <p>
                                                     <?php $project = $task->project()->first(); ?>

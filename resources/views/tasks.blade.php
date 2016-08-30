@@ -67,19 +67,29 @@
                             </div>
                         </fieldset>
                     </form>
-                    <ul class="list-group">
-                        @foreach($tags as $tag)
-                            <li class="list-group-item row">
-                                <a class="btn btn-default" href="/tags/{{ $tag->id }}/confirmdelete">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </a>
-                                <a class="btn btn-default" href="/api/tags/{{ $tag->id }}/edit">
-                                    edit
-                                </a>
-                                {{ $tag->name }}
-                            </li>
-                        @endforeach
-                    </ul>
+                    <form class="" action="/tasks" method="get">
+                        <div>
+                            <ul class="list-group">
+                                @foreach($tags as $tag)
+                                <li class="list-group-item row">
+                                    <a class="btn btn-default" href="/tags/{{ $tag->id }}/confirmdelete">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                    <a class="btn btn-default" href="/api/tags/{{ $tag->id }}/edit">
+                                        edit
+                                    </a>
+                                    <div class="checkbox">
+                                        <label for="tag{{ $tag->id }}">
+                                            <input type="checkbox" name="tags[]" value="{{ $tag->id }}" id="tag{{ $tag->id }}">
+                                            {{ $tag->name }}
+                                        </label>
+                                    </div>
+                                </li>
+                                @endforeach
+                                <input type="submit" value="Sort tags" class="btn btn-primary">
+                            </ul>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -131,8 +141,8 @@
                             <div class="form-group col-md-12">
                                 <label class="col-md-12">Add tag(s):</label>
                                 @foreach($tags as $tag)
-                                    <label for="tag{{ $tag->id }}">
-                                        <input type="checkbox" name="tags[]" id="tag{{ $tag->id }}" value="{{ $tag->id }}">
+                                    <label for="newtag{{ $tag->id }}">
+                                        <input type="checkbox" name="tags[]" id="newtag{{ $tag->id }}" value="{{ $tag->id }}">
                                         {{ $tag->name }}
                                     </label>
                                 @endforeach
@@ -161,7 +171,7 @@
                                         <label for="{{ $task->id }}"><input type="checkbox" name="{{ $task->id }}" id="{{ $task->id }}" value="1" {{ $task->completed == 1 ? 'checked="checked"' : '' }}>{{ $task->body }} {{ $task->due_date ? '(due ' . $task->due_date->diffForHumans() . ')' : '' }}</label>
                                         <p>
                                             @foreach($task->tags as $tag)
-                                                #{{ $tag->name }}
+                                                <a href="/tasks?tags[]={{ $tag->id }}">#{{ $tag->name }}</a>
                                             @endforeach
                                         </p>
                                     </div>

@@ -32,7 +32,8 @@ class TaskController extends Controller
 
         if((( ! isset($request->minDate) || $request->minDate === '' ) ||
            ( ! isset($request->maxDate) || $request->maxDate === '')) &&
-           ( ! isset($request->project) || $request->project === '')) {
+           ( ! isset($request->project) || $request->project === '') &&
+           ( ! isset($request->tags) || $request->tags === '' )) {
             return ["tasks" => $tasks, "projects" => $projects, "tags" => $tags];
         }
 
@@ -42,6 +43,21 @@ class TaskController extends Controller
         if(isset($request->project) && $request->project != '') {
             $tasks = Project::find($request->project)->tasks()->get();
         }
+
+        /*
+        ** Sort by tag
+        */
+        $tasksToShow = [];
+
+        foreach($request->tags as $tag) {
+            foreach($tasks as $task) {
+                if($task->tags->contains($tag)) {
+                    $tasksToShow[] = $task;
+                }
+            }
+        }
+
+        $tasks = $tasksToShow;
 
         /*
         ** Sort tasks by date

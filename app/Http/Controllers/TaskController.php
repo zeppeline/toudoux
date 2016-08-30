@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\Http\Requests;
 use App\Task;
@@ -122,7 +123,9 @@ class TaskController extends Controller
     public function edit($id)
     {
         $task = Task::find($id);
-        return view('taskEdit')->with('task', $task);
+        $projects = Auth::user()->projects()->get();
+        $tags = Auth::user()->tags()->get();
+        return view('taskEdit')->with(['task' => $task, 'tags' => $tags, 'projects' => $projects]);
     }
 
     /**
@@ -135,7 +138,9 @@ class TaskController extends Controller
     public function update(Request $request, $taskId)
     {
         $validator = Validator::make($request->all(), [
-            'body' => 'required|string'
+            'body' => 'required|string',
+            'dueDate' => 'date'
+
         ]);
 
         if($validator->fails()) {
@@ -145,8 +150,16 @@ class TaskController extends Controller
         }
 
         $task = Task::find($taskId);
-        $task->body = $request->input('body');
-        $task->save();
+        $task->update($request->all());
+
+        $tags = [];
+
+        foreach($request->tags as $tag) {
+            $tags[] = $tag;
+        }
+
+        $task->tags()->sync($tags);
+
         return redirect('/tasks');
     }
 

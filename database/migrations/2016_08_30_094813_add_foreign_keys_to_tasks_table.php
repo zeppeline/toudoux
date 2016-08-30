@@ -13,7 +13,7 @@ class AddForeignKeysToTasksTable extends Migration
     public function up()
     {
         Schema::table('tasks', function ($table) {
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            // $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
         });
     }
 

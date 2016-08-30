@@ -35,7 +35,7 @@
                                 <select class="form-control" id="project" name="project">
                                     <option value="">(None)</option>
                                     @foreach ($projects as $project)
-                                        <option value="{{ $project->id }}" {{ $task->project->id === $project->id ? 'selected' : '' }}>
+                                        <option value="{{ $project->id }}" {{ isset($task->project->id) && $task->project->id === $project->id ? 'selected' : '' }}>
                                             {{ $project->name }}
                                         </option>
                                     @endforeach

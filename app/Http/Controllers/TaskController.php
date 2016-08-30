@@ -82,7 +82,7 @@ class TaskController extends Controller
     {
         $this->validate($request, [
             'body' => 'required|string',
-            'dueDate' => 'required|date'
+            'dueDate' => 'date'
         ]);
 
         $task = $request->user()->tasks()->create([

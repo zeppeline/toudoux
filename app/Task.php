@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use \Carbon\Carbon;
 
 class Task extends Model
 {
@@ -24,5 +25,12 @@ class Task extends Model
 
     public function tags() {
         return $this->belongsToMany(Tag::class, 'tasks_tags', 'task_id', 'tag_id');
+    }
+
+    public function getDueDateAttribute($value) {
+        if($value === '0000-00-00') {
+            return false;
+        }
+        return Carbon::parse($value);
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Http\Requests;
 use App\Task;
+use App\Project;
 use Carbon\Carbon;
 
 class TaskController extends Controller
@@ -26,8 +27,8 @@ class TaskController extends Controller
         $projects = $request->user()->projects()->get();
         $tasks= $request->user()->tasks()->get();
 
-        if(( ! isset($request->minDate) || $request->minDate === '' ) ||
-           ( ! isset($request->maxDate) || $request->maxDate === '') &&
+        if((( ! isset($request->minDate) || $request->minDate === '' ) ||
+           ( ! isset($request->maxDate) || $request->maxDate === '')) &&
            ( ! isset($request->project) || $request->project === '')) {
             return ["tasks" => $tasks, "projects" => $projects];
         }
@@ -35,22 +36,28 @@ class TaskController extends Controller
         /*
         ** Sort tasks by project
         */
-
+        if(isset($request->project) && $request->project != '') {
+            $tasks = Project::find($request->project)->tasks()->get();
+        }
 
         /*
         ** Sort tasks by date
         */
-        $minDate = Carbon::parse($request->minDate);
-        $maxDate = Carbon::parse($request->maxDate);
-        $tasksToShow = [];
+        if(isset($request->minDate) && isset($request->maxDate)) {
+            $minDate = Carbon::parse($request->minDate);
+            $maxDate = Carbon::parse($request->maxDate);
+            $tasksToShow = [];
 
-        foreach($tasks as $task) {
-            if(Carbon::parse($task->due_date)->between($minDate, $maxDate)) {
-                $tasksToShow[] = $task;
+            foreach($tasks as $task) {
+                if(Carbon::parse($task->due_date)->between($minDate, $maxDate)) {
+                    $tasksToShow[] = $task;
+                }
             }
+
+            $tasks = $tasksToShow;
         }
 
-        return ["tasks" => $tasksToShow, "projects" => $projects];
+        return ["tasks" => $tasks, "projects" => $projects];
     }
 
     /**

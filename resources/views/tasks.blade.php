@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('bodyClass')
+tasks @endsection
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -124,7 +127,7 @@
 
                 <div class="panel-body">
                     <!-- New task form -->
-                    <form class="row no-js" action="/api/tasks" method="post">
+                    <form class="row no-js" action="/api/tasks" method="post" id="newTaskForm">
                         {{ csrf_field() }}
                         <fieldset>
                             <div class="form-group col-md-4">
@@ -169,7 +172,7 @@
                                     <label class="col-md-12">Add tag(s):</label>
                                     @foreach ($tags as $tag)
                                         <label for="newtag{{ $tag->id }}">
-                                            <input type="checkbox" name="tags[]" id="newtag{{ $tag->id }}" value="{{ $tag->id }}">
+                                            <input type="checkbox" name="tags[]" id="newtag{{ $tag->id }}" value="{{ $tag->id }}" class="newTaskTags">
                                             {{ $tag->name }}
                                         </label>
                                     @endforeach

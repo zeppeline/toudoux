@@ -1,2 +1,24 @@
+/**
+ * project: toudoux
+ * file: app.scss - compile partials
+ **/
+
+/**
+ * Base
+ */
+@import './base/reset';
+@import './base/main';
+
+/**
+ * Vendor
+ */
 // @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+/**
+ * Components
+ */
+
+/**
+ * Layouts
+ */
+@import './layouts/navbar';

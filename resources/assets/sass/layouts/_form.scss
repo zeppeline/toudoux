@@ -1,0 +1,44 @@
+/**
+ * project: toudoux
+ * file: layouts/form - styling forms
+ **/
+
+.form {
+    text-align: left;
+}
+
+.form__label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: $space / 2;
+}
+
+.form__input {
+    background-color: $offwhite;
+    border: 1px solid $gray;
+    border-radius: 5px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, .1);
+    color: $darkgray;
+    display: block;
+    padding: $space / 4 $space / 2;
+    outline: none;
+    transition: .2s;
+
+    &:focus {
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, .2);
+    }
+}
+
+.form__small {
+    margin-bottom: $space;
+
+    .form__input {
+        display: inline-block;
+        width: 80%;
+    }
+
+    .form__button {
+        margin-left: 3%;
+        width: 15%;
+    }
+}

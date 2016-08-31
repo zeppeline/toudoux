@@ -1,0 +1,21 @@
+/**
+ * project: toudoux
+ * file: components/button - styling buttons
+ **/
+
+.form__button {
+    background-color: $blue;
+    border-radius: 5px;
+    border: 0;
+    box-shadow: none;
+    color: $white;
+    padding: $space / 4;
+
+    &.primary {
+        background-color: $blue;
+    }
+
+    &.danger {
+        background-color: $red;
+    }
+}

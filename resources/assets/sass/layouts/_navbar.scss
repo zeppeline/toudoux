@@ -1,0 +1,103 @@
+/**
+ * project: toudoux
+ * file: layouts/navbar - styles for the navbar
+ **/
+
+.navbar {
+    @include box-shadow();
+    background-color: $white;
+    margin-bottom: $space * 2;
+    padding: $space 5%;
+    text-align: right;
+    position: relative;
+}
+
+// Left part
+.navbar__header {
+    display: inline-block;
+    position: absolute;
+    left: 5%;
+    top: 32%;
+    transform: translateY(-32%);
+}
+
+.navbar__header__logo {
+    width: 20px;
+    position: relative;
+    top: 4px;
+    margin-right: .5em;
+}
+
+.navbar__header__text {
+    font-size: 1.3em;
+    font-weight: bold;
+    display: inline-block;
+}
+
+// Right part
+.navbar__items {
+    display: inline-block;
+    text-align: right;
+}
+
+.navbar__item {
+    display: inline-block;
+    & + & {
+        margin-left: 2em;
+    }
+}
+
+.navbar__link {
+    position: relative;
+
+    &:after {
+        content: "";
+        display: block;
+        height: 3px;
+        background-color: $blue;
+        width: 0%;
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        transition: .2s ease-in-out;
+    }
+
+    &:focus,
+    &:hover {
+        &:after {
+            width: 100%;
+            transition: .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+    }
+}
+
+// Responsive
+@media screen and (min-width: 768px) {
+    .navbar {
+        padding: 1em 10%;
+    }
+
+    .navbar__header {
+        left: 10%;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .navbar {
+        padding: 1em calc(calc(100% - #{$bodyWidth}) / 2);
+    }
+
+    .navbar__header {
+        left: calc(calc(100% - #{$bodyWidth}) / 2);
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .navbar {
+        padding: 1em calc(calc(100% - #{$largeBodyWidth}) / 2);
+    }
+
+    .navbar__header {
+        left: calc(calc(100% - #{$largeBodyWidth}) / 2);
+    }
+}

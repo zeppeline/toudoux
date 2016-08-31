@@ -3,7 +3,41 @@
  * file: base/main - general rules and styling
  **/
 
+// Colors
+$gray: #cfcfcf;
+$darkgray: #616262;
+$lightgray: #eceff1;
+$white: #fff;
+$offwhite: #f6f8f9;
+$blue: #74c2f7;
+$red: #b22525;
+
+// Variables
+$space: 20px;
+$bodyWidth: 900px;
+$largeBodyWidth: 970px;
+
+// Basic
 body {
+    background-color: $lightgray;
     font-family: 'Raleway', 'Lato', 'Open-sans', 'Helvetica', sans-serif;
     font-size: 14px;
+    line-height: 1.3;
+    color: $darkgray;
+}
+
+// General rules
+a {
+    color: $darkgray;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+}
+
+//  Mixins
+
+@mixin box-shadow() {
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
 }

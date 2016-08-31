@@ -1,0 +1,44 @@
+/**
+ * project: toudoux
+ * file: components/panel - add styles for panels
+ **/
+
+[class*="-panel"] {
+    @include box-shadow();
+    background-color: $white;
+    border-radius: 5px;
+    margin-bottom: $space;
+    padding: $space $space * 2;
+    text-align: center;
+}
+
+.panel__title {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: $space;
+    position: relative;
+
+    &:after {
+        content: "";
+        display: block;
+        height: 3px;
+        background-color: $blue;
+        width: 100%;
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        transition: .2s ease-in-out;
+    }
+}
+
+.list {
+    text-align: left;
+}
+
+.list__item {
+    font-weight: bold;
+    line-height: 2;
+    display: block;
+    position: relative;
+}

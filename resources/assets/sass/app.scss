@@ -17,8 +17,12 @@
 /**
  * Components
  */
+@import './components/button';
+@import './components/icon';
 
 /**
  * Layouts
  */
 @import './layouts/navbar';
+@import './layouts/panel';
+@import './layouts/form';

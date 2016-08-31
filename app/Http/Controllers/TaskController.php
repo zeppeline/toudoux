@@ -120,7 +120,7 @@ class TaskController extends Controller
             $task->tags()->attach($tags);
         }
 
-        return redirect('/tasks');
+        return [$task, $task->project, $task->tags];
     }
 
     /**
